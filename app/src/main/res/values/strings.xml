@@ -1,0 +1,16 @@
+<resources>
+
+    <string name="app_name">Outdoorsy Challenge</string>
+
+    <!-- Search RV -->
+    <string name="search_rv_toolbar_hint_text">Search</string>
+    <string name="search_rv_voice_search_progress_text">Voice searching…</string>
+    <string name="search_rv_empty_state_title_text">No results to show</string>
+
+    <!-- Item RV -->
+    <string name="item_rv_image_description_text">RV Image</string>
+
+    <!-- Outdoorsy Warnings -->
+    <string name="network_error_text">No internet connection. Try again after checking your internet connection.</string>
+    <string name="generic_error_text">It was not possible to complete your request.</string>
+</resources>

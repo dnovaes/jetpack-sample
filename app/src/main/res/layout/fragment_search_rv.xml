@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.arctouch.io.outdoorsychallenge.features.searchrv.SearchRvViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:focusableInTouchMode="true">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/t_search_rv"
+            style="@style/Widget.MaterialComponents.Toolbar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_search_rv"
+                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin_search_rv"
+                android:hint="@string/search_rv_toolbar_hint_text"
+                app:boxBackgroundColor="@color/white"
+                app:endIconDrawable="@drawable/icon_voice_search"
+                app:endIconMode="custom"
+                app:startIconDrawable="@drawable/icon_search">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/tiet_search_rv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:imeOptions="actionSearch"
+                    android:singleLine="true"
+                    android:text="@={ viewModel.searchInput }" />
+            </com.google.android.material.textfield.TextInputLayout>
+        </com.google.android.material.appbar.MaterialToolbar>
+
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/srl_search_rv_results"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/t_search_rv">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_search_rv_results"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clipToPadding="false"
+                android:overScrollMode="never"
+                android:paddingHorizontal="@dimen/padding_horizontal_search_rv_results"
+                android:paddingTop="@dimen/padding_top_search_rv_results"
+                android:paddingBottom="@dimen/padding_bottom_search_rv_results"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:itemCount="5"
+                tools:listitem="@layout/item_rv" />
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+        <ProgressBar
+            goneUnless="@{ viewModel.paginationProgressIsVisible }"
+            android:layout_width="@dimen/layout_width_search_rv_paging_progress"
+            android:layout_height="@dimen/layout_height_search_rv_paging_progress"
+            app:layout_constraintBottom_toBottomOf="@id/srl_search_rv_results"
+            app:layout_constraintEnd_toEndOf="@id/srl_search_rv_results"
+            app:layout_constraintStart_toStartOf="@id/srl_search_rv_results" />
+
+        <TextView
+            android:id="@+id/tv_search_rv_empty_state_title"
+            goneUnless="@{ viewModel.emptyStateIsVisible }"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/margin_horizontal_search_rv_empty_state_title"
+            android:gravity="center_horizontal"
+            android:text="@string/search_rv_empty_state_title_text"
+            android:textColor="@color/lightGreen"
+            android:textSize="@dimen/text_size_search_rv_empty_state_title"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@id/iv_search_rv_empty_state_image"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/t_search_rv"
+            app:layout_constraintVertical_bias="0.4"
+            app:layout_constraintVertical_chainStyle="packed"
+            tools:visibility="gone" />
+
+        <ImageView
+            android:id="@+id/iv_search_rv_empty_state_image"
+            goneUnless="@{ viewModel.emptyStateIsVisible }"
+            android:layout_width="@dimen/layout_width_search_rv_empty_state_image"
+            android:layout_height="@dimen/layout_height_search_rv_empty_state_image"
+            android:layout_marginTop="@dimen/margin_top_search_rv_empty_state_image"
+            android:importantForAccessibility="no"
+            android:src="@drawable/icon_car"
+            android:tint="@color/lightGreen"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_search_rv_empty_state_title"
+            tools:visibility="visible" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
