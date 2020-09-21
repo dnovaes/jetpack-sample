@@ -16,6 +16,8 @@
         android:layout_marginTop="@dimen/margin_top_item_rv_root"
         android:backgroundTint="@color/white"
         app:cardCornerRadius="@dimen/card_corner_radius_item_rv_root"
+        android:layout_marginLeft="@dimen/margin_search_rv"
+        android:layout_marginRight="@dimen/margin_search_rv"
         app:cardElevation="@dimen/card_elevation_item_rv_root">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -48,11 +50,28 @@
                 android:text="@{ viewModel.name }"
                 android:textSize="@dimen/text_size_item_rv_type"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/iv_item_rv_favorite"
                 app:layout_constraintHorizontal_bias="0"
                 app:layout_constraintStart_toEndOf="@id/iv_item_rv"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="2011 Heartland Trail Runner" />
+
+            <ImageView
+                android:id="@+id/iv_item_rv_favorite"
+                android:layout_width="@dimen/icon_item_rv_width"
+                android:layout_height="wrap_content"
+                src="@{ viewModel.favoriteResource }"
+                android:contentDescription="@string/favorite_item_rv_description_text"
+                android:layout_margin="@dimen/margin_icon_material_default"
+                android:adjustViewBounds="true"
+                android:scaleType="fitCenter"
+                android:onClick="@{ () -> viewModel.onSetFavorite(viewModel.id) }"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0"
+                app:layout_constraintStart_toEndOf="@id/tv_item_rv_type"
+                app:layout_constraintTop_toTopOf="parent">
+            </ImageView>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 

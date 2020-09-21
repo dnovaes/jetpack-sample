@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
         <variable
             name="viewModel"
             type="com.arctouch.io.outdoorsychallenge.features.searchrv.SearchRvViewModel" />
@@ -31,7 +30,8 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/margin_search_rv"
+                android:layout_marginTop="@dimen/margin_search_rv"
+                android:layout_marginBottom="@dimen/margin_search_rv"
                 android:hint="@string/search_rv_toolbar_hint_text"
                 app:boxBackgroundColor="@color/white"
                 app:endIconDrawable="@drawable/icon_voice_search"
@@ -48,6 +48,35 @@
             </com.google.android.material.textfield.TextInputLayout>
         </com.google.android.material.appbar.MaterialToolbar>
 
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tab_rv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/t_search_rv"
+            app:tabGravity="fill"
+            app:tabMaxWidth="0dp"
+            app:tabMode="fixed">
+
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/all"
+                android:icon="@drawable/icon_car">
+
+            </com.google.android.material.tabs.TabItem>
+
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/favorites"
+                android:icon="@drawable/icon_star_unselected">
+
+            </com.google.android.material.tabs.TabItem>
+
+        </com.google.android.material.tabs.TabLayout>
+
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             android:id="@+id/srl_search_rv_results"
             android:layout_width="0dp"
@@ -55,7 +84,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/t_search_rv">
+            app:layout_constraintTop_toBottomOf="@id/tab_rv">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_search_rv_results"
@@ -63,7 +92,6 @@
                 android:layout_height="wrap_content"
                 android:clipToPadding="false"
                 android:overScrollMode="never"
-                android:paddingHorizontal="@dimen/padding_horizontal_search_rv_results"
                 android:paddingTop="@dimen/padding_top_search_rv_results"
                 android:paddingBottom="@dimen/padding_bottom_search_rv_results"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"

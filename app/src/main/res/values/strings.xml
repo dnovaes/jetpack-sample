@@ -6,6 +6,8 @@
     <string name="search_rv_toolbar_hint_text">Search</string>
     <string name="search_rv_voice_search_progress_text">Voice searching…</string>
     <string name="search_rv_empty_state_title_text">No results to show</string>
+    <string name="all">All</string>
+    <string name="favorites">Favorites</string>
 
     <!-- Item RV -->
     <string name="item_rv_image_description_text">RV Image</string>
@@ -13,4 +15,5 @@
     <!-- Outdoorsy Warnings -->
     <string name="network_error_text">No internet connection. Try again after checking your internet connection.</string>
     <string name="generic_error_text">It was not possible to complete your request.</string>
+    <string name="favorite_item_rv_description_text">Favorite Icon</string>
 </resources>
