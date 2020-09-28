@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
         <variable
             name="viewModel"
             type="com.arctouch.io.outdoorsychallenge.features.searchrv.adapters.SearchRvVehicleViewModel" />
@@ -60,7 +59,7 @@
                 android:id="@+id/iv_item_rv_favorite"
                 android:layout_width="@dimen/icon_item_rv_width"
                 android:layout_height="wrap_content"
-                src="@{ viewModel.favoriteResource }"
+                srcFavorite="@{ viewModel.isFavorite }"
                 android:contentDescription="@string/favorite_item_rv_description_text"
                 android:layout_margin="@dimen/margin_icon_material_default"
                 android:adjustViewBounds="true"
