@@ -59,7 +59,7 @@
                 android:id="@+id/iv_item_rv_favorite"
                 android:layout_width="@dimen/icon_item_rv_width"
                 android:layout_height="wrap_content"
-                srcFavorite="@{ viewModel.isFavorite }"
+                android:src="@{ viewModel.isFavorite ? @drawable/icon_star_selected : @drawable/icon_star_unselected }"
                 android:contentDescription="@string/favorite_item_rv_description_text"
                 android:layout_margin="@dimen/margin_icon_material_default"
                 android:adjustViewBounds="true"
