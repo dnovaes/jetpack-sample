@@ -1,7 +1,6 @@
 package com.arctouch.io.outdoorsychallenge
 
 import android.app.Application
-import androidx.databinding.library.BuildConfig
 import com.arctouch.io.outdoorsychallenge.data.dataModule
 import com.arctouch.io.outdoorsychallenge.domain.domainModule
 import com.arctouch.io.outdoorsychallenge.features.featuresModule

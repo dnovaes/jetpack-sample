@@ -21,3 +21,4 @@ fun ImageView.loadImage(url: String?, placeholder: Drawable?, error: Drawable?) 
 fun View.goneUnless(visible: Boolean) {
     visibility = if (visible) View.VISIBLE else View.GONE
 }
+
