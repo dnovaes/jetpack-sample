@@ -2,6 +2,7 @@ package com.arctouch.io.outdoorsychallenge.features.searchrv
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import androidx.paging.Config
 import androidx.paging.DataSource
 import androidx.paging.LivePagedListBuilder
@@ -11,6 +12,9 @@ import com.arctouch.io.outdoorsychallenge.connectivity.ErrorHandlingViewModel
 import com.arctouch.io.outdoorsychallenge.domain.dispatchers.DispatcherMap
 import com.arctouch.io.outdoorsychallenge.domain.model.Vehicle
 import com.arctouch.io.outdoorsychallenge.domain.repository.IVehicleRepository
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class SearchRvViewModel(private val repository: IVehicleRepository, dispatcherMap: DispatcherMap) :
     ErrorHandlingViewModel(dispatcherMap) {
@@ -18,6 +22,9 @@ class SearchRvViewModel(private val repository: IVehicleRepository, dispatcherMa
     val searchInput = MutableLiveData<String>()
 
     val vehicles: LiveData<PagedList<Vehicle>> = buildPagedListLiveData()
+
+    private val _favoriteVehicles =  MutableLiveData<List<Vehicle>>()
+    val favoriteVehicles: LiveData<List<Vehicle>> = _favoriteVehicles
 
     private val _emptyStateIsVisible = MutableLiveData<Boolean>(true)
     val emptyStateIsVisible: LiveData<Boolean> get() = _emptyStateIsVisible
@@ -45,6 +52,17 @@ class SearchRvViewModel(private val repository: IVehicleRepository, dispatcherMa
     fun onSearchRvButtonClicked() = pagingDataSource.invalidate()
 
     fun onSwipeToRefresh() = pagingDataSource.invalidate()
+
+    fun getFavoritesVehicles() {
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+                val vehicles = repository.getFavoriteVehicles()
+                withContext(Dispatchers.Main) {
+                    _favoriteVehicles.value = vehicles
+                }
+            }
+        }
+    }
 
     private inner class VehiclePagingDataSource : PageKeyedDataSource<Int, Vehicle>() {
         override fun loadBefore(params: LoadParams<Int>, callback: LoadCallback<Int, Vehicle>) =
