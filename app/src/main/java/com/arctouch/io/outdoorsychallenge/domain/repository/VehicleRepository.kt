@@ -4,8 +4,10 @@ import com.arctouch.io.outdoorsychallenge.data.source.database.IVehicleDatabaseS
 import com.arctouch.io.outdoorsychallenge.data.source.remote.outdoorsy.IVehicleRemoteDataSource
 import com.arctouch.io.outdoorsychallenge.domain.model.Vehicle
 
-class VehicleRepository(private val dataSource: IVehicleRemoteDataSource,
-                        private val databaseSource: IVehicleDatabaseSource) : IVehicleRepository {
+class VehicleRepository(
+    private val dataSource: IVehicleRemoteDataSource,
+    private val databaseSource: IVehicleDatabaseSource
+) : IVehicleRepository {
 
     override suspend fun getFavoriteVehicles(): List<Vehicle> = databaseSource.getAllFavorites()
 
