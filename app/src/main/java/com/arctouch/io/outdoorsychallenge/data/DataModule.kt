@@ -14,7 +14,23 @@ val networkModule = module {
     single { OutdoorsyClientBuilder().buildApiClient() }
 }
 
+val databaseModule = module {
+    single {
+        Room.databaseBuilder(
+            androidContext(),
+            VehicleDatabase::class.java,
+            VehicleDatabase.TABLE_NAME
+        ).build()
+    }
+
+    single {
+        get<VehicleDatabase>().vehicleDao()
+    }
+}
+
+
 val dataSourceModule = module {
+
     single<IVehicleRemoteDataSource> {
         VehicleRemoteDataSource(
             api = get(),
@@ -24,17 +40,9 @@ val dataSourceModule = module {
 
     single<IVehicleDatabaseSource> {
         VehicleDatabaseSource(
-            vehicleDao = get<VehicleDatabase>().vehicleDao()
+            vehicleDao = get()
         )
-    }
-
-    single {
-        Room.databaseBuilder(
-            androidContext(),
-            VehicleDatabase::class.java,
-            VehicleDatabase.TABLE_NAME
-        ).build()
     }
 }
 
-val dataModule = networkModule + dataSourceModule
+val dataModule = networkModule + databaseModule + dataSourceModule
