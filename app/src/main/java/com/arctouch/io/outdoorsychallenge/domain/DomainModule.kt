@@ -16,7 +16,12 @@ val factoryModule = module {
 }
 
 val repositoryModule = module {
-    single<IVehicleRepository> { VehicleRepository(dataSource = get(), databaseSource = get()) }
+    single<IVehicleRepository> {
+        VehicleRepository(
+            dataSource = get(),
+            databaseSource = get()
+        )
+    }
 }
 
 val domainModule = dispatchersModule + factoryModule + repositoryModule
