@@ -55,12 +55,10 @@ class SearchRvViewModel(private val repository: IVehicleRepository, dispatcherMa
 
     fun getFavoritesVehicles() {
         viewModelScope.launch {
-            withContext(Dispatchers.IO) {
-                val vehicles = repository.getFavoriteVehicles()
-                withContext(Dispatchers.Main) {
-                    _favoriteVehicles.value = vehicles
-                }
+            val vehicles = withContext(Dispatchers.IO) {
+                repository.getFavoriteVehicles()
             }
+            _favoriteVehicles.value = vehicles
         }
     }
 
