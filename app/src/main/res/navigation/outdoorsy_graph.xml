@@ -10,4 +10,12 @@
         android:id="@+id/search_rv"
         android:name="com.arctouch.io.outdoorsychallenge.features.searchrv.SearchRvFragment"
         tools:layout="@layout/fragment_search_rv" />
+
+    <action
+        android:id="@+id/action_global_search_rv"
+        app:destination="@id/search_rv"
+        app:enterAnim="@anim/translate_slide_in_right"
+        app:exitAnim="@anim/translate_hold_still"
+        app:popEnterAnim="@anim/translate_hold_still"
+        app:popExitAnim="@anim/translate_slide_out_right" />
 </navigation>

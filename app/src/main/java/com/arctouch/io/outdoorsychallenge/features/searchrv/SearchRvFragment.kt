@@ -13,6 +13,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.observe
+//import androidx.navigation.fragment.findNavController
+//import com.arctouch.io.outdoorsychallenge.OutdoorsyGraphDirections
 import com.arctouch.io.outdoorsychallenge.R
 import com.arctouch.io.outdoorsychallenge.R.string.search_rv_voice_search_progress_text
 import com.arctouch.io.outdoorsychallenge.connectivity.ErrorHandlingFragment
@@ -27,6 +29,8 @@ class SearchRvFragment : ErrorHandlingFragment() {
     override val viewModel: SearchRvViewModel by viewModel()
 
     private lateinit var vehicleAdapter: SearchRvVehicleAdapter
+
+//    private val navController by lazy { findNavController() }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -43,6 +47,11 @@ class SearchRvFragment : ErrorHandlingFragment() {
         setupViews()
         observeEvents()
     }
+
+//    private fun navigationFunctions() {
+//        navController.navigate(OutdoorsyGraphDirections.actionGlobalSearchRv())
+//        navController.popBackStack(R.id.search_rv, true)
+//    }
 
     private fun setupViews() = with(binding) {
         binding.srlSearchRvResults.apply {
