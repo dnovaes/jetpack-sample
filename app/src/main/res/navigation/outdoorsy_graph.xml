@@ -11,9 +11,15 @@
         android:name="com.arctouch.io.outdoorsychallenge.features.searchrv.SearchRvFragment"
         tools:layout="@layout/fragment_search_rv" />
 
+    <!-- Search RV -->
+    <fragment
+        android:id="@+id/qrcode"
+        android:name="com.arctouch.io.outdoorsychallenge.features.qrcode.QrCodeFragment"
+        tools:layout="@layout/fragment_qrcode" />
+
     <action
-        android:id="@+id/action_global_search_rv"
-        app:destination="@id/search_rv"
+        android:id="@+id/action_global_qrcode"
+        app:destination="@id/qrcode"
         app:enterAnim="@anim/translate_slide_in_right"
         app:exitAnim="@anim/translate_hold_still"
         app:popEnterAnim="@anim/translate_hold_still"
