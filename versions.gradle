@@ -25,6 +25,7 @@ versions.mockito_core = '3.2.4'
 versions.mockito_kotlin = '2.2.0'
 versions.arch_core = '2.1.0'
 versions.atsl_runner = '1.2.0'
+versions.room = '2.2.5'
 versions.zxing = '4.1.0'
 
 def deps = [:]
@@ -92,6 +93,12 @@ deps.arch_core = arch_core
 def espresso = [:]
 espresso.core = "androidx.test.espresso:espresso-core:$versions.espresso"
 deps.espresso = espresso
+
+def room = [:]
+room.runtime = "androidx.room:room-runtime:$versions.room"
+room.compiler = "androidx.room:room-compiler:$versions.room"
+room.ktx = "androidx.room:room-ktx:$versions.room"
+deps.room = room
 
 deps.timber = "com.jakewharton.timber:timber:$versions.timber"
 deps.databinding = "androidx.databinding:databinding-compiler:$versions.android_gradle_plugin"

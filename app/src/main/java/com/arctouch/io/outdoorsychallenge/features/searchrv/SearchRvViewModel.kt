@@ -2,6 +2,7 @@ package com.arctouch.io.outdoorsychallenge.features.searchrv
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import androidx.paging.Config
 import androidx.paging.DataSource
 import androidx.paging.LivePagedListBuilder
@@ -11,6 +12,9 @@ import com.arctouch.io.outdoorsychallenge.connectivity.ErrorHandlingViewModel
 import com.arctouch.io.outdoorsychallenge.domain.dispatchers.DispatcherMap
 import com.arctouch.io.outdoorsychallenge.domain.model.Vehicle
 import com.arctouch.io.outdoorsychallenge.domain.repository.IVehicleRepository
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import com.arctouch.io.outdoorsychallenge.domain.usecase.GetVehicleListJsonValueUseCase
 
 class SearchRvViewModel(
@@ -22,6 +26,9 @@ class SearchRvViewModel(
     val searchInput = MutableLiveData<String>()
 
     val vehicles: LiveData<PagedList<Vehicle>> = buildPagedListLiveData()
+
+    private val _favoriteVehicles =  MutableLiveData<List<Vehicle>>()
+    val favoriteVehicles: LiveData<List<Vehicle>> = _favoriteVehicles
 
     private val _emptyStateIsVisible = MutableLiveData<Boolean>(true)
     val emptyStateIsVisible: LiveData<Boolean> get() = _emptyStateIsVisible
@@ -50,6 +57,15 @@ class SearchRvViewModel(
 
     fun onSwipeToRefresh() = pagingDataSource.invalidate()
 
+    fun getFavoritesVehicles() {
+        viewModelScope.launch {
+            val vehicles = withContext(Dispatchers.IO) {
+                repository.getFavoriteVehicles()
+            }
+            _favoriteVehicles.value = vehicles
+        }
+    }
+  
     fun onQrCodeListReceived() = pagingDataSource.invalidate()
 
     fun getResultJson(): String = vehicleJsonValueUseCase.invoke()

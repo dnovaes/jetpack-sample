@@ -118,4 +118,9 @@ dependencies {
 
     // Espresso UI Testing
     androidTestImplementation deps.espresso.core
+
+    // Database
+    implementation deps.room.runtime
+    implementation deps.room.ktx
+    kapt deps.room.compiler
 }
