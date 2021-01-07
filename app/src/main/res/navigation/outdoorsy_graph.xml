@@ -14,8 +14,8 @@
     <!-- Search RV -->
     <fragment
         android:id="@+id/qrcode"
-        android:name="com.arctouch.io.outdoorsychallenge.features.qrcode.QrCodeFragment"
-        tools:layout="@layout/fragment_qrcode" />
+        android:name="com.arctouch.io.outdoorsychallenge.features.readqrcode.ReadQrCodeFragment"
+        tools:layout="@layout/fragment_read_qrcode" />
 
     <action
         android:id="@+id/action_global_qrcode"

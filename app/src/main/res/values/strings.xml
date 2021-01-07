@@ -8,9 +8,10 @@
     <string name="search_rv_empty_state_title_text">No results to show</string>
     <string name="all">All</string>
     <string name="favorites">Favorites</string>
-    <string name="qrcode_mode">QrCode reading mode</string>
-    <string name="qrcode_activity">Activity</string>
-    <string name="qrcode_fragment">Fragment</string>
+    <string name="qrcode_dialog_title">QrCode Search</string>
+    <string name="qrcode_external">Read by external camera</string>
+    <string name="qrcode_in_app">Read by InApp View</string>
+    <string name="qrcode_generation">Generate QrCode</string>
 
     <!-- Item RV -->
     <string name="item_rv_image_description_text">RV Image</string>

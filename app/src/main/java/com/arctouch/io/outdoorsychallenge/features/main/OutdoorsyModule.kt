@@ -4,5 +4,5 @@ import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 val outdoorsyModule = module {
-    viewModel { OutdoorsyViewModel(dispatcherMap = get()) }
+    viewModel { OutdoorsyViewModel(dispatcherMap = get(), getVehicleListByJson = get()) }
 }

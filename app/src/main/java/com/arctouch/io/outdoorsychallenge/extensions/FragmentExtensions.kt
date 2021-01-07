@@ -1,6 +1,7 @@
 package com.arctouch.io.outdoorsychallenge.extensions
 
 import android.graphics.drawable.Drawable
+import android.util.DisplayMetrics
 import android.view.View
 import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
@@ -25,3 +26,8 @@ private fun showSnackbar(anchorView: View, actionText: String, background: Drawa
 
 fun Fragment.hideKeyboard(view: View) =
     context?.inputMethodService?.hideSoftInputFromWindow(view.windowToken, 0)
+
+fun Fragment.getScreenWidth() = DisplayMetrics().let { displayMetrics ->
+    activity?.windowManager?.defaultDisplay?.getMetrics(displayMetrics)
+    displayMetrics.widthPixels
+}

@@ -1,5 +1,6 @@
 package com.arctouch.io.outdoorsychallenge.data
 
+import com.arctouch.io.outdoorsychallenge.data.source.local.cache.VehicleCache
 import com.arctouch.io.outdoorsychallenge.data.source.remote.outdoorsy.IVehicleRemoteDataSource
 import com.arctouch.io.outdoorsychallenge.data.source.remote.outdoorsy.VehicleRemoteDataSource
 import com.arctouch.io.outdoorsychallenge.data.source.remote.outdoorsy.network.OutdoorsyClientBuilder
@@ -14,9 +15,14 @@ val dataSourceModule = module {
     single<IVehicleRemoteDataSource> {
         VehicleRemoteDataSource(
             api = get(),
-            factory = get<VehicleFactory>()
+            factory = get<VehicleFactory>(),
+            cache = get()
         )
     }
 }
 
-val dataModule = networkModule + dataSourceModule
+val cacheModule = module {
+    single { VehicleCache() }
+}
+
+val dataModule = networkModule + dataSourceModule + cacheModule

@@ -1,4 +1,4 @@
-package com.arctouch.io.outdoorsychallenge.features.qrcode
+package com.arctouch.io.outdoorsychallenge.features.readqrcode
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,18 +9,19 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.arctouch.io.outdoorsychallenge.R
 import com.arctouch.io.outdoorsychallenge.connectivity.ErrorHandlingFragment
-import com.arctouch.io.outdoorsychallenge.databinding.FragmentQrcodeBinding
+import com.arctouch.io.outdoorsychallenge.databinding.FragmentReadQrcodeBinding
 import com.arctouch.io.outdoorsychallenge.features.main.OutdoorsyViewModel
 import com.journeyapps.barcodescanner.BarcodeCallback
 import com.journeyapps.barcodescanner.BarcodeResult
 import com.journeyapps.barcodescanner.CompoundBarcodeView
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import timber.log.Timber
 
-class QrCodeFragment : ErrorHandlingFragment(), BarcodeCallback {
+class ReadQrCodeFragment : ErrorHandlingFragment(), BarcodeCallback {
 
-    override lateinit var binding: FragmentQrcodeBinding
-    override val viewModel: QrCodeViewModel by viewModel()
+    override lateinit var binding: FragmentReadQrcodeBinding
+    override val viewModel: ReadQrCodeViewModel by viewModel()
     override val navController: NavController by lazy { findNavController() }
     private val sharedViewModel: OutdoorsyViewModel by sharedViewModel()
 
@@ -30,7 +31,7 @@ class QrCodeFragment : ErrorHandlingFragment(), BarcodeCallback {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View = FragmentQrcodeBinding.inflate(inflater).apply {
+    ): View = FragmentReadQrcodeBinding.inflate(inflater).apply {
         lifecycleOwner = viewLifecycleOwner
 
         binding = this
@@ -52,14 +53,18 @@ class QrCodeFragment : ErrorHandlingFragment(), BarcodeCallback {
 
     private fun setupViews() = with(binding) {
         barcodeView = qrCodeReader
-        barcodeView.decodeContinuous(this@QrCodeFragment)
+        barcodeView.decodeContinuous(this@ReadQrCodeFragment)
     }
 
     override fun barcodeResult(result: BarcodeResult?) {
         result?.let {
-            barcodeView.pause()
-            navController.popBackStack(R.id.search_rv, false)
-            sharedViewModel.onQrCodeRead(it.text)
+            if (it.text[0] == '[') {
+                barcodeView.pause()
+                navController.popBackStack(R.id.search_rv, false)
+                sharedViewModel.onQrCodeRead(it.text)
+            } else {
+                Timber.tag("QrCodeUtils").d( "QRCode reading error: ${it.text}")
+            }
         } ?: Toast.makeText(context, "Cancelled", Toast.LENGTH_LONG).show()
     }
 }

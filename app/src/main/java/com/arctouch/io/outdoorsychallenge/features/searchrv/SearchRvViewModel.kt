@@ -11,9 +11,13 @@ import com.arctouch.io.outdoorsychallenge.connectivity.ErrorHandlingViewModel
 import com.arctouch.io.outdoorsychallenge.domain.dispatchers.DispatcherMap
 import com.arctouch.io.outdoorsychallenge.domain.model.Vehicle
 import com.arctouch.io.outdoorsychallenge.domain.repository.IVehicleRepository
+import com.arctouch.io.outdoorsychallenge.domain.usecase.GetVehicleListJsonValueUseCase
 
-class SearchRvViewModel(private val repository: IVehicleRepository, dispatcherMap: DispatcherMap) :
-    ErrorHandlingViewModel(dispatcherMap) {
+class SearchRvViewModel(
+    private val repository: IVehicleRepository,
+    dispatcherMap: DispatcherMap,
+    private val vehicleJsonValueUseCase: GetVehicleListJsonValueUseCase
+) : ErrorHandlingViewModel(dispatcherMap) {
 
     val searchInput = MutableLiveData<String>()
 
@@ -45,6 +49,10 @@ class SearchRvViewModel(private val repository: IVehicleRepository, dispatcherMa
     fun onSearchRvButtonClicked() = pagingDataSource.invalidate()
 
     fun onSwipeToRefresh() = pagingDataSource.invalidate()
+
+    fun onQrCodeListReceived() = pagingDataSource.invalidate()
+
+    fun getResultJson(): String = vehicleJsonValueUseCase.invoke()
 
     private inner class VehiclePagingDataSource : PageKeyedDataSource<Int, Vehicle>() {
         override fun loadBefore(params: LoadParams<Int>, callback: LoadCallback<Int, Vehicle>) =
