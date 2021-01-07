@@ -5,6 +5,7 @@ import android.view.View
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.observe
+import androidx.navigation.NavController
 import com.arctouch.io.outdoorsychallenge.R
 import com.arctouch.io.outdoorsychallenge.extensions.showWarningSnackbar
 
@@ -12,6 +13,7 @@ abstract class ErrorHandlingFragment : Fragment() {
 
     protected abstract val binding: ViewDataBinding
     protected abstract val viewModel: ErrorHandlingViewModel
+    protected abstract val navController: NavController
 
     final override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         observeEvents()

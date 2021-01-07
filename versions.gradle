@@ -26,6 +26,7 @@ versions.mockito_kotlin = '2.2.0'
 versions.arch_core = '2.1.0'
 versions.atsl_runner = '1.2.0'
 versions.room = '2.2.5'
+versions.zxing = '4.1.0'
 
 def deps = [:]
 deps.android_gradle_plugin = "com.android.tools.build:gradle:$versions.android_gradle_plugin"
@@ -104,6 +105,7 @@ deps.databinding = "androidx.databinding:databinding-compiler:$versions.android_
 deps.glide = "com.github.bumptech.glide:glide:$versions.glide"
 deps.material = "com.google.android.material:material:$versions.material"
 deps.paging = "androidx.paging:paging-runtime-ktx:$versions.paging"
+deps.zxing = "com.journeyapps:zxing-android-embedded:$versions.zxing"
 
 ext.deps = deps
 

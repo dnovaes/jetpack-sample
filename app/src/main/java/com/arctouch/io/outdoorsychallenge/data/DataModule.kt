@@ -3,6 +3,7 @@ package com.arctouch.io.outdoorsychallenge.data
 import androidx.room.Room
 import com.arctouch.io.outdoorsychallenge.data.source.database.IVehicleDatabaseSource
 import com.arctouch.io.outdoorsychallenge.data.source.database.VehicleDatabaseSource
+import com.arctouch.io.outdoorsychallenge.data.source.local.cache.VehicleCache
 import com.arctouch.io.outdoorsychallenge.data.source.remote.outdoorsy.IVehicleRemoteDataSource
 import com.arctouch.io.outdoorsychallenge.data.source.remote.outdoorsy.VehicleRemoteDataSource
 import com.arctouch.io.outdoorsychallenge.data.source.remote.outdoorsy.network.OutdoorsyClientBuilder
@@ -28,13 +29,13 @@ val databaseModule = module {
     }
 }
 
-
 val dataSourceModule = module {
 
     single<IVehicleRemoteDataSource> {
         VehicleRemoteDataSource(
             api = get(),
-            factory = get<VehicleFactory>()
+            factory = get<VehicleFactory>(),
+            cache = get()
         )
     }
 
@@ -45,4 +46,8 @@ val dataSourceModule = module {
     }
 }
 
-val dataModule = networkModule + databaseModule + dataSourceModule
+val cacheModule = module {
+    single { VehicleCache() }
+}
+
+val dataModule = networkModule + dataSourceModule + dataSourceModule + cacheModule

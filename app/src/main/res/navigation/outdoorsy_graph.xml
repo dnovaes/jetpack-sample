@@ -10,4 +10,18 @@
         android:id="@+id/search_rv"
         android:name="com.arctouch.io.outdoorsychallenge.features.searchrv.SearchRvFragment"
         tools:layout="@layout/fragment_search_rv" />
+
+    <!-- Search RV -->
+    <fragment
+        android:id="@+id/qrcode"
+        android:name="com.arctouch.io.outdoorsychallenge.features.readqrcode.ReadQrCodeFragment"
+        tools:layout="@layout/fragment_read_qrcode" />
+
+    <action
+        android:id="@+id/action_global_qrcode"
+        app:destination="@id/qrcode"
+        app:enterAnim="@anim/translate_slide_in_right"
+        app:exitAnim="@anim/translate_hold_still"
+        app:popEnterAnim="@anim/translate_hold_still"
+        app:popExitAnim="@anim/translate_slide_out_right" />
 </navigation>

@@ -92,6 +92,9 @@ dependencies {
     implementation deps.retrofit.moshi_converter
     implementation deps.retrofit.coroutine_adapter
 
+    // Zxing
+    implementation deps.zxing
+
     // Timber
     implementation deps.timber
 

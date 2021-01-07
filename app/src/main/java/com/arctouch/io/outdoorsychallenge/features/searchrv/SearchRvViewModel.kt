@@ -15,9 +15,13 @@ import com.arctouch.io.outdoorsychallenge.domain.repository.IVehicleRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import com.arctouch.io.outdoorsychallenge.domain.usecase.GetVehicleListJsonValueUseCase
 
-class SearchRvViewModel(private val repository: IVehicleRepository, dispatcherMap: DispatcherMap) :
-    ErrorHandlingViewModel(dispatcherMap) {
+class SearchRvViewModel(
+    private val repository: IVehicleRepository,
+    dispatcherMap: DispatcherMap,
+    private val vehicleJsonValueUseCase: GetVehicleListJsonValueUseCase
+) : ErrorHandlingViewModel(dispatcherMap) {
 
     val searchInput = MutableLiveData<String>()
 
@@ -61,6 +65,10 @@ class SearchRvViewModel(private val repository: IVehicleRepository, dispatcherMa
             _favoriteVehicles.value = vehicles
         }
     }
+  
+    fun onQrCodeListReceived() = pagingDataSource.invalidate()
+
+    fun getResultJson(): String = vehicleJsonValueUseCase.invoke()
 
     private inner class VehiclePagingDataSource : PageKeyedDataSource<Int, Vehicle>() {
         override fun loadBefore(params: LoadParams<Int>, callback: LoadCallback<Int, Vehicle>) =
