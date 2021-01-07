@@ -4,16 +4,15 @@ import android.animation.LayoutTransition
 import android.app.Activity.RESULT_OK
 import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
 import android.os.Bundle
 import android.speech.RecognizerIntent.*
-import android.util.DisplayMetrics
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
-import com.arctouch.io.outdoorsychallenge.OutdoorsyGraphDirections
 import com.arctouch.io.outdoorsychallenge.R
 import com.arctouch.io.outdoorsychallenge.R.string.search_rv_voice_search_progress_text
 import com.arctouch.io.outdoorsychallenge.connectivity.ErrorHandlingFragment
@@ -22,7 +21,6 @@ import com.arctouch.io.outdoorsychallenge.extensions.getScreenWidth
 import com.arctouch.io.outdoorsychallenge.extensions.hideKeyboard
 import com.arctouch.io.outdoorsychallenge.features.main.OutdoorsyViewModel
 import com.arctouch.io.outdoorsychallenge.features.searchrv.adapters.SearchRvVehicleAdapter
-import com.arctouch.io.outdoorsychallenge.features.showqrcode.ShowQrCodeDialog
 import com.arctouch.io.outdoorsychallenge.tools.QrCodeUtils
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.zxing.integration.android.IntentIntegrator
@@ -55,8 +53,12 @@ class SearchRvFragment : ErrorHandlingFragment() {
         observeEvents()
     }
 
-    private fun navigateToQrCode() {
-        navController.navigate(OutdoorsyGraphDirections.actionGlobalQrcode())
+    private fun navigateToReadQrCode() {
+        navController.navigate(SearchRvFragmentDirections.actionSearchToReadQrCode())
+    }
+
+    private fun navigateToShowQrCode(image: Bitmap) {
+        navController.navigate(SearchRvFragmentDirections.actionSearchToShowQrCode(image))
     }
 
     private fun setupViews() = with(binding) {
@@ -108,7 +110,7 @@ class SearchRvFragment : ErrorHandlingFragment() {
     private fun setupQrCodeDialog(context: Context) {
         qrCodeDialog ?: MaterialAlertDialogBuilder(context).run {
             setTitle(getString(R.string.qrcode_dialog_title))
-            setPositiveButton(getString(R.string.qrcode_in_app)) { _, _ -> navigateToQrCode() }
+            setPositiveButton(getString(R.string.qrcode_in_app)) { _, _ -> navigateToReadQrCode() }
             setNegativeButton(getString(R.string.qrcode_external)) { _, _ ->
                 IntentIntegrator(activity).apply {
                     setDesiredBarcodeFormats(IntentIntegrator.QR_CODE)
@@ -132,13 +134,7 @@ class SearchRvFragment : ErrorHandlingFragment() {
         val jsonText = viewModel.getResultJson()
         if (jsonText.isBlank()) return
 
-        val qrCodeBitmap = QrCodeUtils.generateQRCodeBitmapBy(jsonText, getScreenWidth())
-
-        ShowQrCodeDialog.Builder(context, R.style.Theme_AppCompat_Dialog).apply {
-            setImageBitmapSrc(qrCodeBitmap)
-            create()
-            show()
-        }
+        navigateToShowQrCode(QrCodeUtils.generateQRCodeBitmapBy(jsonText, getScreenWidth()))
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

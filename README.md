@@ -13,11 +13,16 @@ This project was made in Kotlin unsing AndroidX for studying purpose and uses th
 - ConstraintLayout
 - Cardview
 - Ktx
+- Zxing
 - **Espresso for instrumented testing**
 - **Mockito for unit testing**
 
 ## Functionality
-This is a single-page app that provides the ability to search Outdoorsy listings by keyword. Users will be able to type keywords in a text field. Typing in the text field will search for relevant results and display them for the user. Listings should display an image of the vehicle and the vehicle’s name.
+This is a single-activity app that provides the ability to search Outdoorsy listings by keyword.
+Users will be able to type keywords in a text field or search by voice.
+Typing in the text field will search for relevant results and display them for the user.
+Listings should display an image of the vehicle and the vehicle’s name.
+The app also generates qrcode of the last top 8 items searched and share it and obviously read a qrcode to populate with items.
 
 ## Endpoint documentation
 

@@ -1,10 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto" >
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <ImageView
-        android:id="@+id/show_qr_code"
-        android:importantForAccessibility="no"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.arctouch.io.outdoorsychallenge.features.showqrcode.ShowQrCodeViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/show_qr_code_iv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:importantForAccessibility="no"
+            app:layout_constraintBottom_toTopOf="@id/show_qr_code_share_bt"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageButton
+            android:id="@+id/show_qr_code_share_bt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:background="@color/zxing_transparent"
+            android:importantForAccessibility="no"
+            android:onClick="@{ () -> viewModel.shareButtonClicked() }"
+            android:padding="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/show_qr_code_iv"
+            app:srcCompat="@drawable/icon_share" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
