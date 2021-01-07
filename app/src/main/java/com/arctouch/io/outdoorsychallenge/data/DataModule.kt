@@ -1,13 +1,14 @@
 package com.arctouch.io.outdoorsychallenge.data
 
-import androidx.room.Room
-import com.arctouch.io.outdoorsychallenge.data.source.database.IVehicleDatabaseSource
-import com.arctouch.io.outdoorsychallenge.data.source.database.VehicleDatabaseSource
+import com.arctouch.io.outdoorsychallenge.data.source.local.IVehicleLocalDataSource
+import com.arctouch.io.outdoorsychallenge.data.source.local.VehicleLocalDataSource
 import com.arctouch.io.outdoorsychallenge.data.source.local.cache.VehicleCache
-import com.arctouch.io.outdoorsychallenge.data.source.remote.outdoorsy.IVehicleRemoteDataSource
-import com.arctouch.io.outdoorsychallenge.data.source.remote.outdoorsy.VehicleRemoteDataSource
+import com.arctouch.io.outdoorsychallenge.data.source.local.database.VehicleDatabaseClient
+import com.arctouch.io.outdoorsychallenge.data.source.remote.outdoorsy.datasource.IVehicleRemoteDataSource
+import com.arctouch.io.outdoorsychallenge.data.source.remote.outdoorsy.datasource.VehicleRemoteDataSource
 import com.arctouch.io.outdoorsychallenge.data.source.remote.outdoorsy.network.OutdoorsyClientBuilder
 import com.arctouch.io.outdoorsychallenge.domain.model.factory.VehicleFactory
+import com.arctouch.io.outdoorsychallenge.domain.model.mapper.VehicleMapper
 import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
 
@@ -16,17 +17,9 @@ val networkModule = module {
 }
 
 val databaseModule = module {
-    single {
-        Room.databaseBuilder(
-            androidContext(),
-            VehicleDatabase::class.java,
-            VehicleDatabase.TABLE_NAME
-        ).build()
-    }
+    single { VehicleDatabaseClient.setupDatabase(context = androidContext()) }
 
-    single {
-        get<VehicleDatabase>().vehicleDao()
-    }
+    single { get<VehicleDatabaseClient>().vehicleDao() }
 }
 
 val dataSourceModule = module {
@@ -39,9 +32,10 @@ val dataSourceModule = module {
         )
     }
 
-    single<IVehicleDatabaseSource> {
-        VehicleDatabaseSource(
-            vehicleDao = get()
+    single<IVehicleLocalDataSource> {
+        VehicleLocalDataSource(
+            vehicleDao = get(),
+            mapper = get<VehicleMapper>()
         )
     }
 }
@@ -50,4 +44,4 @@ val cacheModule = module {
     single { VehicleCache() }
 }
 
-val dataModule = networkModule + dataSourceModule + dataSourceModule + cacheModule
+val dataModule = networkModule + dataSourceModule + databaseModule + cacheModule

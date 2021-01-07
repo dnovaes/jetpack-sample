@@ -1,6 +1,7 @@
-package com.arctouch.io.outdoorsychallenge.data.source.remote.outdoorsy
+package com.arctouch.io.outdoorsychallenge.data.source.remote.outdoorsy.datasource
 
 import com.arctouch.io.outdoorsychallenge.data.source.local.cache.VehicleCache
+import com.arctouch.io.outdoorsychallenge.data.source.local.cache.VehicleCache.Origin.QRCODE
 import com.arctouch.io.outdoorsychallenge.data.source.remote.outdoorsy.network.OutdoorsyApi
 import com.arctouch.io.outdoorsychallenge.domain.model.Vehicle
 import com.arctouch.io.outdoorsychallenge.domain.model.factory.VehicleFactoryAlias
@@ -18,10 +19,7 @@ class VehicleRemoteDataSource(
     ): List<Vehicle>? {
         val isFirstPage = pageLimit >= pageOffset
 
-        return if (cache.origin == VehicleCache.Origin.QRCODE &&
-            cache.items.isNotEmpty() &&
-            isFirstPage
-        ) cache.items
+        return if (cache.origin == QRCODE && cache.items.isNotEmpty() && isFirstPage) cache.items
         else if (query != QR_CODE_RESULT)
             api.fetchVehiclesAsync(query, pageLimit, pageOffset)
                 .await()

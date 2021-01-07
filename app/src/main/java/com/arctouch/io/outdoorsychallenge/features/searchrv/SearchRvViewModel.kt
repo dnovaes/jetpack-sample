@@ -57,7 +57,7 @@ class SearchRvViewModel(
 
     fun onSwipeToRefresh() = pagingDataSource.invalidate()
 
-    fun getFavoritesVehicles() {
+    fun getFavoritedVehicles() {
         viewModelScope.launch {
             val vehicles = withContext(Dispatchers.IO) {
                 repository.getFavoriteVehicles()
