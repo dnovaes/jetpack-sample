@@ -22,3 +22,16 @@ fun View.goneUnless(visible: Boolean) {
     visibility = if (visible) View.VISIBLE else View.GONE
 }
 
+@BindingAdapter(
+    value = ["toggleStatus", "toggledDescription", "untoggledDescription"],
+    requireAll = false
+)
+fun View.setupAsToggleButton(
+    toggleStatus: Boolean,
+    toggledDescription: String? = null,
+    untoggledDescription: String? = null
+) {
+    contentDescription = if (toggleStatus) toggledDescription else untoggledDescription
+    isActivated = toggleStatus
+}
+

@@ -1,5 +1,6 @@
 package com.arctouch.io.outdoorsychallenge.domain.repository
 
+import androidx.lifecycle.LiveData
 import com.arctouch.io.outdoorsychallenge.data.source.local.IVehicleLocalDataSource
 import com.arctouch.io.outdoorsychallenge.data.source.local.cache.VehicleCache
 import com.arctouch.io.outdoorsychallenge.data.source.local.cache.VehicleCache.Origin.QRCODE
@@ -19,6 +20,14 @@ class VehicleRepository(
     ) = remoteDataSource.fetchVehicles(query, pageLimit, pageOffset).orEmpty()
 
     override suspend fun getFavoriteVehicles(): List<Vehicle> = localDataSource.getAll()
+
+    override suspend fun addFavorite(vehicle: Vehicle) = localDataSource.add(vehicle)
+
+    override suspend fun removeFavorite(vehicle: Vehicle) = localDataSource.remove(vehicle)
+
+    override suspend fun isFavorite(vehicle: Vehicle) = localDataSource.isFavorite(vehicle.id)
+
+    override fun observeFavoriteStatusBy(id: String) = localDataSource.observeFavoriteStatusBy(id)
 
     override fun getQrCodeResultVehicles(): List<Vehicle> =
         if (cache.origin == QRCODE) cache.items else mutableListOf()

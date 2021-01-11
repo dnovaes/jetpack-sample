@@ -9,8 +9,7 @@ import com.arctouch.io.outdoorsychallenge.features.searchrv.SearchRvFragment
 class MainPagerAdapter(
     fragmentManager: FragmentManager,
     private val titles: List<String>
-) :
-    FragmentPagerAdapter(fragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
+) : FragmentPagerAdapter(fragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
     override fun getCount() = 3
 
     override fun getItem(position: Int) =

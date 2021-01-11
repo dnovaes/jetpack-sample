@@ -4,5 +4,11 @@ import com.arctouch.io.outdoorsychallenge.domain.model.Vehicle
 import org.koin.dsl.module
 
 val vehicleModule = module {
-    factory { (vehicle: Vehicle) -> VehicleViewModel(vehicle = vehicle) }
+    factory { (vehicle: Vehicle) ->
+        VehicleViewModel(
+            dispatcherMap = get(),
+            vehicle = vehicle,
+            repository = get()
+        )
+    }
 }

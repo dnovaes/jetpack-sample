@@ -12,6 +12,7 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
+import androidx.viewpager.widget.ViewPager
 import com.arctouch.io.outdoorsychallenge.R
 import com.arctouch.io.outdoorsychallenge.R.string.search_rv_voice_search_progress_text
 import com.arctouch.io.outdoorsychallenge.connectivity.ErrorHandlingFragment
@@ -77,6 +78,21 @@ class MainFragment : ErrorHandlingFragment() {
                 getString(R.string.qr_code_result)
             )
         )
+
+        mainVp.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+            override fun onPageSelected(position: Int) {
+                if (position == FAVORITES_TAB_POSITION)
+                    this@MainFragment.viewModel.onFavoritesTabSelected()
+            }
+
+            override fun onPageScrolled(
+                position: Int,
+                positionOffset: Float,
+                positionOffsetPixels: Int
+            ) = Unit
+
+            override fun onPageScrollStateChanged(state: Int) = Unit
+        })
     }
 
     private fun observeEvents() {
@@ -138,6 +154,7 @@ class MainFragment : ErrorHandlingFragment() {
     companion object {
 
         private const val SEARCH_RESULT_TAB_POSITION = 0
+        private const val FAVORITES_TAB_POSITION = 1
         private const val QR_CODE_RESULT_TAB_POSITION = 2
 
         private const val VOICE_RECOGNITION_REQUEST_CODE = 1234

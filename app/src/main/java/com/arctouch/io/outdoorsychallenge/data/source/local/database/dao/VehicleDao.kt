@@ -22,5 +22,8 @@ interface VehicleDao {
     suspend fun getAll(): List<VehicleEntity>
 
     @Query("SELECT * FROM vehicle WHERE id = :id")
-    fun observeBy(id: String): LiveData<VehicleEntity>
+    suspend fun getBy(id: String): VehicleEntity?
+
+    @Query("SELECT * FROM vehicle WHERE id = :id")
+    fun observeBy(id: String): LiveData<VehicleEntity?>
 }

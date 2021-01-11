@@ -8,7 +8,9 @@ interface IVehicleLocalDataSource {
 
     suspend fun remove(vehicle: Vehicle)
 
-    fun observeBy(id: String): LiveData<Vehicle>
+    suspend fun isFavorite(id: String): Boolean
+
+    fun observeFavoriteStatusBy(id: String): LiveData<Boolean>
 
     suspend fun getAll(): List<Vehicle>
 }

@@ -1,6 +1,5 @@
 package com.arctouch.io.outdoorsychallenge.data.source.local
 
-import androidx.lifecycle.LiveData
 import com.arctouch.io.outdoorsychallenge.data.source.local.database.dao.VehicleDao
 import com.arctouch.io.outdoorsychallenge.domain.model.Vehicle
 import com.arctouch.io.outdoorsychallenge.domain.model.mapper.VehicleMapperAlias
@@ -14,8 +13,9 @@ class VehicleLocalDataSource(
 
     override suspend fun remove(vehicle: Vehicle) = vehicleDao.deleteBy(vehicle.id)
 
-    override fun observeBy(id: String): LiveData<Vehicle> =
-        vehicleDao.observeBy(id).map { mapper.toDomain(it) }
+    override suspend fun isFavorite(id: String) = vehicleDao.getBy(id) != null
+
+    override fun observeFavoriteStatusBy(id: String) = vehicleDao.observeBy(id).map { it != null }
 
     override suspend fun getAll(): List<Vehicle> = vehicleDao.getAll().map { mapper.toDomain(it) }
 }

@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="viewModel"
             type="com.arctouch.io.outdoorsychallenge.features.vehicleadapter.VehicleViewModel" />
@@ -12,11 +13,11 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/margin_search_rv"
         android:layout_marginTop="@dimen/margin_top_item_rv_root"
+        android:layout_marginRight="@dimen/margin_search_rv"
         android:backgroundTint="@color/white"
         app:cardCornerRadius="@dimen/card_corner_radius_item_rv_root"
-        android:layout_marginLeft="@dimen/margin_search_rv"
-        android:layout_marginRight="@dimen/margin_search_rv"
         app:cardElevation="@dimen/card_elevation_item_rv_root">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -25,8 +26,8 @@
 
             <ImageView
                 android:id="@+id/iv_item_rv"
-                imageUrl="@{ viewModel.imageUrl }"
                 error="@{ @drawable/icon_no_image }"
+                imageUrl="@{ viewModel.imageUrl }"
                 placeholder="@{ @drawable/icon_placeholder }"
                 android:layout_width="0dp"
                 android:layout_height="@dimen/layout_height_item_rv_image"
@@ -37,7 +38,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:src="@drawable/icon_placeholder"/>
+                tools:src="@drawable/icon_placeholder" />
 
             <TextView
                 android:id="@+id/tv_item_rv_type"
@@ -55,22 +56,23 @@
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="2011 Heartland Trail Runner" />
 
-            <ImageView
+            <ImageButton
                 android:id="@+id/iv_item_rv_favorite"
+                toggleStatus="@{ viewModel.isFavorite }"
                 android:layout_width="@dimen/icon_item_rv_width"
                 android:layout_height="wrap_content"
-                android:src="@{ viewModel.isFavorite ? @drawable/icon_star_selected : @drawable/icon_star_unselected }"
-                android:contentDescription="@string/favorite_item_rv_description_text"
                 android:layout_margin="@dimen/margin_icon_material_default"
                 android:adjustViewBounds="true"
+                android:background="@null"
+                android:contentDescription="@string/favorite_item_rv_description_text"
+                android:onClick="@{ () -> viewModel.toggleFavoriteStatus() }"
                 android:scaleType="fitCenter"
-                android:onClick="@{ () -> viewModel.onSetFavorite(viewModel.id) }"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0"
                 app:layout_constraintStart_toEndOf="@id/tv_item_rv_type"
-                app:layout_constraintTop_toTopOf="parent">
-            </ImageView>
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/selector_favorited_vehicle"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 
