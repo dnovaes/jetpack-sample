@@ -48,7 +48,7 @@ class QrCodeResultFragment : ErrorHandlingFragment() {
         viewModel.vehicles.observe(viewLifecycleOwner) { vehicleAdapter.submitList(it) }
 
         sharedViewModel.qrCodeListReceivedEvent.observe(viewLifecycleOwner) {
-            viewModel.onQrCodeListReceived()
+            viewModel.onQrCodeListReceived(it)
         }
     }
 

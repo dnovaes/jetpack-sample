@@ -16,6 +16,4 @@ interface IVehicleRepository {
     suspend fun isFavorite(vehicle: Vehicle): Boolean
 
     fun observeFavoriteStatusBy(id: String): LiveData<Boolean>
-
-    fun getQrCodeResultVehicles(): List<Vehicle>
 }

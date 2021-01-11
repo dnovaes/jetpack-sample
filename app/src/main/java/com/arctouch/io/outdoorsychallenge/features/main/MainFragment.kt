@@ -9,12 +9,14 @@ import android.speech.RecognizerIntent.*
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
 import androidx.viewpager.widget.ViewPager
 import com.arctouch.io.outdoorsychallenge.R
-import com.arctouch.io.outdoorsychallenge.R.string.search_rv_voice_search_progress_text
+import com.arctouch.io.outdoorsychallenge.R.string.main_qr_code_error_message
+import com.arctouch.io.outdoorsychallenge.R.string.main_voice_search_progress_text
 import com.arctouch.io.outdoorsychallenge.connectivity.ErrorHandlingFragment
 import com.arctouch.io.outdoorsychallenge.databinding.FragmentMainBinding
 import com.arctouch.io.outdoorsychallenge.extensions.getScreenWidth
@@ -73,9 +75,9 @@ class MainFragment : ErrorHandlingFragment() {
         mainVp.adapter = MainPagerAdapter(
             fragmentManager = childFragmentManager,
             titles = listOf(
-                getString(R.string.all),
-                getString(R.string.favorites),
-                getString(R.string.qr_code_result)
+                getString(R.string.main_tab_all),
+                getString(R.string.main_tab_favorites),
+                getString(R.string.main_tab_qr_code_result)
             )
         )
 
@@ -98,14 +100,18 @@ class MainFragment : ErrorHandlingFragment() {
     private fun observeEvents() {
         sharedViewModel.qrCodeEvent.observe(viewLifecycleOwner) {
             binding.mainVp.currentItem = QR_CODE_RESULT_TAB_POSITION
-            viewModel.onQrCodeListReceived()
+            viewModel.onQrCodeListReceived(it)
+        }
+
+        viewModel.qrCodeGeneratedEvent.observe(viewLifecycleOwner) {
+            showQrCodeDialog(it)
         }
     }
 
     private fun startVoiceRecognitionActivity() {
         val intent = Intent(ACTION_RECOGNIZE_SPEECH)
         intent.putExtra(EXTRA_LANGUAGE_MODEL, LANGUAGE_MODEL_FREE_FORM)
-        intent.putExtra(EXTRA_PROMPT, getString(search_rv_voice_search_progress_text))
+        intent.putExtra(EXTRA_PROMPT, getString(main_voice_search_progress_text))
         startActivityForResult(intent, VOICE_RECOGNITION_REQUEST_CODE)
     }
 
@@ -116,30 +122,29 @@ class MainFragment : ErrorHandlingFragment() {
 
     private fun showQrCodeOptionsDialog(context: Context) {
         qrCodeDialog ?: MaterialAlertDialogBuilder(context).run {
-            setTitle(getString(R.string.qr_code_dialog_title))
-            setPositiveButton(getString(R.string.qr_code_in_app)) { _, _ -> navigateToReadQrCode() }
-            setNegativeButton(getString(R.string.qr_code_external)) { _, _ ->
+            setTitle(getString(R.string.main_qr_code_dialog_title))
+            setPositiveButton(getString(R.string.main_qr_code_dialog_in_app_button)) { _, _ -> navigateToReadQrCode() }
+            setNegativeButton(getString(R.string.main_qr_code_dialog_external_button)) { _, _ ->
                 IntentIntegrator(activity).apply {
                     setDesiredBarcodeFormats(IntentIntegrator.QR_CODE)
                     setBeepEnabled(false)
                     initiateScan()
                 }
             }
-            setNeutralButton(R.string.qr_code_generation) { _, _ ->
+            setNeutralButton(R.string.main_qr_code_dialog_generate_button) { _, _ ->
                 qrCodeDialog?.dismiss()
-                showQrCodeDialog()
+                viewModel.onGenerateQrCodeButtonClicked()
             }
             qrCodeDialog = create()
         }
-        qrCodeDialog
-            ?.getButton(AlertDialog.BUTTON_NEUTRAL)
-            ?.isEnabled = binding.mainTiet.text.toString().isNotBlank()
         qrCodeDialog?.show()
     }
 
-    private fun showQrCodeDialog() {
-        val jsonText = viewModel.getResultJson()
-        if (jsonText.isBlank()) return
+    private fun showQrCodeDialog(jsonText: String?) {
+        if (jsonText.isNullOrBlank()) {
+            Toast.makeText(context, getString(main_qr_code_error_message), Toast.LENGTH_LONG).show()
+            return
+        }
 
         navigateToShowQrCode(QrCodeUtils.generateQRCodeBitmapBy(jsonText, getScreenWidth()))
     }

@@ -7,7 +7,8 @@ val mainModule = module {
     viewModel {
         MainViewModel(
             dispatcherMap = get(),
-            vehicleJsonValueUseCase = get()
+            vehicleListFromJsonUseCase = get(),
+            favoritesJsonValueUseCase = get()
         )
     }
 }

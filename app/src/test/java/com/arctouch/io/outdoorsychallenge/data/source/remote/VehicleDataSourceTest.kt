@@ -1,7 +1,7 @@
 package com.arctouch.io.outdoorsychallenge.data.source.remote
 
-import com.arctouch.io.outdoorsychallenge.data.source.remote.outdoorsy.datasource.IVehicleRemoteDataSource
-import com.arctouch.io.outdoorsychallenge.data.source.remote.outdoorsy.datasource.VehicleRemoteDataSource
+import com.arctouch.io.outdoorsychallenge.data.source.remote.outdoorsy.IVehicleRemoteDataSource
+import com.arctouch.io.outdoorsychallenge.data.source.remote.outdoorsy.VehicleRemoteDataSource
 import com.arctouch.io.outdoorsychallenge.data.source.remote.outdoorsy.network.OutdoorsyApi
 import com.arctouch.io.outdoorsychallenge.domain.model.factory.VehicleFactory
 import com.arctouch.io.outdoorsychallenge.features.main.MainViewModel.Companion.RV_LIST_PAGE_LIMIT

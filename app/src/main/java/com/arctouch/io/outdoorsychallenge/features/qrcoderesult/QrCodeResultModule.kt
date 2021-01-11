@@ -5,9 +5,6 @@ import org.koin.dsl.module
 
 val qrCodeResultModule = module {
     viewModel {
-        QrCodeResultViewModel(
-            repository = get(),
-            dispatcherMap = get()
-        )
+        QrCodeResultViewModel(dispatcherMap = get())
     }
 }

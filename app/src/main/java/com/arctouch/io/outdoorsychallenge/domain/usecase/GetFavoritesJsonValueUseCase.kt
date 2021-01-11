@@ -1,30 +1,29 @@
 package com.arctouch.io.outdoorsychallenge.domain.usecase
 
-import com.arctouch.io.outdoorsychallenge.data.source.local.cache.VehicleCache
 import com.arctouch.io.outdoorsychallenge.domain.model.Vehicle
+import com.arctouch.io.outdoorsychallenge.domain.repository.IVehicleRepository
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.Types
 import java.lang.reflect.Type
 
+interface GetFavoritesJsonValueUseCase {
 
-interface GetVehicleListJsonValueUseCase {
-
-    operator fun invoke(): String
+    suspend operator fun invoke(): String
 }
 
-class GetVehicleListJsonValue constructor(
-    private val vehicleCache: VehicleCache,
+class GetFavoritesJsonValue constructor(
+    private val repository: IVehicleRepository,
     private val moshi: Moshi
-) : GetVehicleListJsonValueUseCase {
+) : GetFavoritesJsonValueUseCase {
 
-    override fun invoke(): String {
+    override suspend fun invoke(): String {
         val type: Type = Types.newParameterizedType(
             MutableList::class.java,
             Vehicle::class.java
         )
         val adapter: JsonAdapter<List<*>> = moshi.adapter(type)
 
-        return adapter.toJson(vehicleCache.items)
+        return adapter.toJson(repository.getFavoriteVehicles())
     }
 }

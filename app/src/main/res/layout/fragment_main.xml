@@ -35,7 +35,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginVertical="@dimen/margin_search_rv"
-                    android:hint="@string/search_rv_toolbar_hint_text"
+                    android:hint="@string/main_toolbar_hint_text"
                     app:boxBackgroundColor="@color/white"
                     app:endIconDrawable="@drawable/icon_voice_search"
                     app:endIconMode="custom"

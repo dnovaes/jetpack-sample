@@ -1,4 +1,4 @@
-package com.arctouch.io.outdoorsychallenge.data.source.remote.outdoorsy.datasource
+package com.arctouch.io.outdoorsychallenge.data.source.remote.outdoorsy
 
 import com.arctouch.io.outdoorsychallenge.domain.model.Vehicle
 

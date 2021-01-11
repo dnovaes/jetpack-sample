@@ -2,16 +2,17 @@
 
     <string name="app_name">Outdoorsy Challenge</string>
 
-    <!-- Search RV -->
-    <string name="search_rv_toolbar_hint_text">Search</string>
-    <string name="search_rv_voice_search_progress_text">Voice searching…</string>
-    <string name="all">All</string>
-    <string name="favorites">Favorites</string>
-    <string name="qr_code_result">QrCode</string>
-    <string name="qr_code_dialog_title">QrCode Search</string>
-    <string name="qr_code_external">Read by external camera</string>
-    <string name="qr_code_in_app">Read by InApp View</string>
-    <string name="qr_code_generation">Generate QrCode</string>
+    <!-- Main -->
+    <string name="main_qr_code_error_message">It was not possible to generate an QrCode</string>
+    <string name="main_toolbar_hint_text">Search</string>
+    <string name="main_voice_search_progress_text">Voice searching…</string>
+    <string name="main_tab_all">All</string>
+    <string name="main_tab_favorites">Favorites</string>
+    <string name="main_tab_qr_code_result">QrCode</string>
+    <string name="main_qr_code_dialog_title">QrCode Search</string>
+    <string name="main_qr_code_dialog_external_button">Read by external camera</string>
+    <string name="main_qr_code_dialog_in_app_button">Read by InApp View</string>
+    <string name="main_qr_code_dialog_generate_button">Generate favorites QrCode</string>
 
     <!-- Empty State -->
     <string name="empty_state_title_text">No results to show</string>
