@@ -1,29 +1,18 @@
 package com.arctouch.io.outdoorsychallenge.features.searchrv
 
 import android.animation.LayoutTransition
-import android.app.Activity.RESULT_OK
-import android.content.Context
-import android.content.Intent
-import android.graphics.Bitmap
 import android.os.Bundle
 import android.speech.RecognizerIntent.*
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
 import com.arctouch.io.outdoorsychallenge.R
-import com.arctouch.io.outdoorsychallenge.R.string.search_rv_voice_search_progress_text
 import com.arctouch.io.outdoorsychallenge.connectivity.ErrorHandlingFragment
 import com.arctouch.io.outdoorsychallenge.databinding.FragmentSearchRvBinding
-import com.arctouch.io.outdoorsychallenge.extensions.getScreenWidth
-import com.arctouch.io.outdoorsychallenge.extensions.hideKeyboard
-import com.arctouch.io.outdoorsychallenge.features.main.OutdoorsyViewModel
-import com.arctouch.io.outdoorsychallenge.features.searchrv.adapters.SearchRvVehicleAdapter
-import com.arctouch.io.outdoorsychallenge.tools.QrCodeUtils
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.google.zxing.integration.android.IntentIntegrator
+import com.arctouch.io.outdoorsychallenge.features.main.MainViewModel
+import com.arctouch.io.outdoorsychallenge.features.outdoorsy.OutdoorsyViewModel
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -32,10 +21,10 @@ class SearchRvFragment : ErrorHandlingFragment() {
     override lateinit var binding: FragmentSearchRvBinding
     override val viewModel: SearchRvViewModel by viewModel()
     override val navController by lazy { findNavController() }
-    private val sharedViewModel: OutdoorsyViewModel by sharedViewModel()
+    private val outdoorsyViewModel: OutdoorsyViewModel by sharedViewModel()
+    private val mainViewModel: MainViewModel by sharedViewModel()
 
     private lateinit var vehicleAdapter: SearchRvVehicleAdapter
-    private var qrCodeDialog: AlertDialog? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -53,100 +42,31 @@ class SearchRvFragment : ErrorHandlingFragment() {
         observeEvents()
     }
 
-    private fun navigateToReadQrCode() {
-        navController.navigate(SearchRvFragmentDirections.actionSearchToReadQrCode())
-    }
-
-    private fun navigateToShowQrCode(image: Bitmap) {
-        navController.navigate(SearchRvFragmentDirections.actionSearchToShowQrCode(image))
-    }
-
     private fun setupViews() = with(binding) {
-        qrCodeBt.setOnClickListener { context?.let { setupQrCodeDialog(it) } }
-
-        binding.srlSearchRvResults.apply {
+        binding.searchRvResultsSrl.apply {
             setOnRefreshListener { this@SearchRvFragment.viewModel.onSwipeToRefresh() }
             setColorSchemeResources(R.color.colorPrimaryDark, R.color.colorPrimary)
             layoutTransition?.enableTransitionType(LayoutTransition.CHANGING)
         }
 
-        tietSearchRv.setOnEditorActionListener { _, _, _ ->
-            hideKeyboard(root)
-            this@SearchRvFragment.viewModel.onSearchRvButtonClicked()
-            true
-        }
-
-        tilSearchRv.setEndIconOnClickListener { startVoiceRecognitionActivity() }
-
         vehicleAdapter = SearchRvVehicleAdapter(viewLifecycleOwner)
-        rvSearchRvResults.adapter = vehicleAdapter
+        searchRvResultsRv.adapter = vehicleAdapter
     }
 
-    private fun observeEvents() = with(viewModel) {
-        vehicles.observe(viewLifecycleOwner) { vehicleAdapter.submitList(it) }
-
-        progressIsVisible.observe(viewLifecycleOwner) {
-            binding.srlSearchRvResults.isRefreshing = it
+    private fun observeEvents() {
+        mainViewModel.searchButtonClickEvent.observe(viewLifecycleOwner) {
+            viewModel.onSearchRvButtonClicked(it)
         }
 
-        sharedViewModel.qrCodeEvent.observe(viewLifecycleOwner) {
-            binding.tietSearchRv.setText(QR_CODE_RESULT)
-            viewModel.onQrCodeListReceived()
-        }
-    }
+        viewModel.vehicles.observe(viewLifecycleOwner) { vehicleAdapter.submitList(it) }
 
-    private fun startVoiceRecognitionActivity() {
-        val intent = Intent(ACTION_RECOGNIZE_SPEECH)
-        intent.putExtra(EXTRA_LANGUAGE_MODEL, LANGUAGE_MODEL_FREE_FORM)
-        intent.putExtra(EXTRA_PROMPT, getString(search_rv_voice_search_progress_text))
-        startActivityForResult(intent, VOICE_RECOGNITION_REQUEST_CODE)
-    }
-
-    private fun searchQuery(query: String) {
-        binding.tietSearchRv.setText(query)
-        viewModel.onSearchRvButtonClicked()
-    }
-
-    private fun setupQrCodeDialog(context: Context) {
-        qrCodeDialog ?: MaterialAlertDialogBuilder(context).run {
-            setTitle(getString(R.string.qrcode_dialog_title))
-            setPositiveButton(getString(R.string.qrcode_in_app)) { _, _ -> navigateToReadQrCode() }
-            setNegativeButton(getString(R.string.qrcode_external)) { _, _ ->
-                IntentIntegrator(activity).apply {
-                    setDesiredBarcodeFormats(IntentIntegrator.QR_CODE)
-                    setBeepEnabled(false)
-                    initiateScan()
-                }
-            }
-            setNeutralButton(R.string.qrcode_generation) { _, _ ->
-                qrCodeDialog?.dismiss()
-                showQrCodeDialog(context)
-            }
-            qrCodeDialog = create()
-        }
-        qrCodeDialog
-            ?.getButton(AlertDialog.BUTTON_NEUTRAL)
-            ?.isEnabled = binding.tietSearchRv.text.toString().isNotBlank()
-        qrCodeDialog?.show()
-    }
-
-    private fun showQrCodeDialog(context: Context) {
-        val jsonText = viewModel.getResultJson()
-        if (jsonText.isBlank()) return
-
-        navigateToShowQrCode(QrCodeUtils.generateQRCodeBitmapBy(jsonText, getScreenWidth()))
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == VOICE_RECOGNITION_REQUEST_CODE && resultCode == RESULT_OK) {
-            val matches = data?.getStringArrayListExtra(EXTRA_RESULTS)
-            if (!matches.isNullOrEmpty()) searchQuery(matches[0])
+        viewModel.progressIsVisible.observe(viewLifecycleOwner) {
+            binding.searchRvResultsSrl.isRefreshing = it
         }
     }
 
     companion object {
 
-        private const val VOICE_RECOGNITION_REQUEST_CODE = 1234
-        const val QR_CODE_RESULT = "QrCode Result"
+        fun newInstance() = SearchRvFragment()
     }
 }

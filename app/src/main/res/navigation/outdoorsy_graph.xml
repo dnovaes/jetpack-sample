@@ -3,16 +3,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/outdoorsy_graph"
-    app:startDestination="@id/search_rv">
+    app:startDestination="@id/main">
 
     <!-- Search RV -->
     <fragment
-        android:id="@+id/search_rv"
-        android:name="com.arctouch.io.outdoorsychallenge.features.searchrv.SearchRvFragment"
-        tools:layout="@layout/fragment_search_rv" >
+        android:id="@+id/main"
+        android:name="com.arctouch.io.outdoorsychallenge.features.main.MainFragment"
+        tools:layout="@layout/fragment_main" >
 
         <action
-            android:id="@+id/action_search_to_read_qr_code"
+            android:id="@+id/action_main_to_read_qr_code"
             app:destination="@id/read_qr_code"
             app:enterAnim="@anim/translate_slide_in_right"
             app:exitAnim="@anim/translate_hold_still"
@@ -20,7 +20,7 @@
             app:popExitAnim="@anim/translate_slide_out_right" />
 
         <action
-            android:id="@+id/action_search_to_show_qr_code"
+            android:id="@+id/action_main_to_show_qr_code"
             app:destination="@id/show_qr_code"
             app:enterAnim="@anim/translate_slide_in_right"
             app:exitAnim="@anim/translate_hold_still"

@@ -1,4 +1,4 @@
-package com.arctouch.io.outdoorsychallenge.features.main
+package com.arctouch.io.outdoorsychallenge.features.outdoorsy
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope

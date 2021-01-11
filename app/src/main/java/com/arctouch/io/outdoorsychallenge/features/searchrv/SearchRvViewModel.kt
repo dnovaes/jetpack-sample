@@ -23,12 +23,9 @@ class SearchRvViewModel(
     private val vehicleJsonValueUseCase: GetVehicleListJsonValueUseCase
 ) : ErrorHandlingViewModel(dispatcherMap) {
 
-    val searchInput = MutableLiveData<String>()
+    private var searchInput: String? = null
 
     val vehicles: LiveData<PagedList<Vehicle>> = buildPagedListLiveData()
-
-    private val _favoriteVehicles =  MutableLiveData<List<Vehicle>>()
-    val favoriteVehicles: LiveData<List<Vehicle>> = _favoriteVehicles
 
     private val _emptyStateIsVisible = MutableLiveData<Boolean>(true)
     val emptyStateIsVisible: LiveData<Boolean> get() = _emptyStateIsVisible
@@ -53,18 +50,12 @@ class SearchRvViewModel(
             )
         ).build()
 
-    fun onSearchRvButtonClicked() = pagingDataSource.invalidate()
+    fun onSearchRvButtonClicked(searchInput: String?) {
+        this.searchInput = searchInput
+        pagingDataSource.invalidate()
+    }
 
     fun onSwipeToRefresh() = pagingDataSource.invalidate()
-
-    fun getFavoritedVehicles() {
-        viewModelScope.launch {
-            val vehicles = withContext(Dispatchers.IO) {
-                repository.getFavoriteVehicles()
-            }
-            _favoriteVehicles.value = vehicles
-        }
-    }
   
     fun onQrCodeListReceived() = pagingDataSource.invalidate()
 
@@ -78,7 +69,7 @@ class SearchRvViewModel(
             params: LoadInitialParams<Int>,
             callback: LoadInitialCallback<Int, Vehicle>
         ) {
-            val query = searchInput.value ?: run {
+            val query = searchInput ?: run {
                 _progressIsVisible.postValue(false)
                 return
             }
@@ -96,7 +87,7 @@ class SearchRvViewModel(
         }
 
         override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Int, Vehicle>) {
-            val query = searchInput.value ?: run {
+            val query = searchInput ?: run {
                 _progressIsVisible.postValue(false)
                 return
             }

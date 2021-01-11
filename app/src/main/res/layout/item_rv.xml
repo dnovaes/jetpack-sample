@@ -6,7 +6,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.arctouch.io.outdoorsychallenge.features.searchrv.adapters.SearchRvVehicleViewModel" />
+            type="com.arctouch.io.outdoorsychallenge.features.vehicleadapter.VehicleViewModel" />
     </data>
 
     <androidx.cardview.widget.CardView

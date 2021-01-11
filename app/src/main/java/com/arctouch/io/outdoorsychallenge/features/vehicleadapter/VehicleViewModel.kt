@@ -1,10 +1,10 @@
-package com.arctouch.io.outdoorsychallenge.features.searchrv.adapters
+package com.arctouch.io.outdoorsychallenge.features.vehicleadapter
 
 import androidx.lifecycle.ViewModel
 import com.arctouch.io.outdoorsychallenge.domain.model.Vehicle
 import timber.log.Timber
 
-class SearchRvVehicleViewModel(vehicle: Vehicle) : ViewModel() {
+class VehicleViewModel(vehicle: Vehicle) : ViewModel() {
 
     val id = vehicle.id
     val name = vehicle.name
@@ -12,6 +12,6 @@ class SearchRvVehicleViewModel(vehicle: Vehicle) : ViewModel() {
     val isFavorite = vehicle.isFavorite
 
     fun onSetFavorite(id: String?) {
-        Timber.v("logd insert vehicle in roomDatabase with same id $id")
+        Timber.v("log insert vehicle in roomDatabase with same id $id")
     }
 }

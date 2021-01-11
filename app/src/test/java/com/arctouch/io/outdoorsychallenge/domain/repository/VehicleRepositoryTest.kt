@@ -1,7 +1,7 @@
 package com.arctouch.io.outdoorsychallenge.domain.repository
 
 import com.arctouch.io.outdoorsychallenge.data.source.remote.outdoorsy.datasource.IVehicleRemoteDataSource
-import com.arctouch.io.outdoorsychallenge.features.searchrv.SearchRvViewModel.Companion.RV_LIST_PAGE_LIMIT
+import com.arctouch.io.outdoorsychallenge.features.main.MainViewModel.Companion.RV_LIST_PAGE_LIMIT
 import com.arctouch.io.outdoorsychallenge.unitmocks.mockVehicles
 import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.times

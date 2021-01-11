@@ -12,7 +12,6 @@
     <dimen name="layout_height_search_rv_paging_progress">24dp</dimen>
     <dimen name="layout_width_search_rv_empty_state_image">180dp</dimen>
     <dimen name="layout_height_search_rv_empty_state_image">180dp</dimen>
-    <dimen name="margin_top_search_rv_empty_state_image">24dp</dimen>
 
     <!-- Item RV -->
     <dimen name="margin_item_rv_image">4dp</dimen>

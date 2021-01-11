@@ -10,7 +10,7 @@ import androidx.navigation.fragment.findNavController
 import com.arctouch.io.outdoorsychallenge.R
 import com.arctouch.io.outdoorsychallenge.connectivity.ErrorHandlingFragment
 import com.arctouch.io.outdoorsychallenge.databinding.FragmentReadQrcodeBinding
-import com.arctouch.io.outdoorsychallenge.features.main.OutdoorsyViewModel
+import com.arctouch.io.outdoorsychallenge.features.outdoorsy.OutdoorsyViewModel
 import com.journeyapps.barcodescanner.BarcodeCallback
 import com.journeyapps.barcodescanner.BarcodeResult
 import com.journeyapps.barcodescanner.CompoundBarcodeView
@@ -60,7 +60,7 @@ class ReadQrCodeFragment : ErrorHandlingFragment(), BarcodeCallback {
         result?.let {
             if (it.text[0] == '[') {
                 barcodeView.pause()
-                navController.popBackStack(R.id.search_rv, false)
+                navController.popBackStack(R.id.main, false)
                 sharedViewModel.onQrCodeRead(it.text)
             } else {
                 Timber.tag("QrCodeUtils").d( "QRCode reading error: ${it.text}")

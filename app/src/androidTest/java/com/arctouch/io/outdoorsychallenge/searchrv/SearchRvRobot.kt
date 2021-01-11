@@ -25,7 +25,7 @@ object SearchRvRobot {
     }
 
     fun matchAmountOfListedItems(amount: Int) =
-        matchWithItemCount(R.id.rv_search_rv_results, amount)
+        matchWithItemCount(R.id.search_rv_results_rv, amount)
 }
 
 fun searchRvState(block: suspend SearchRvRobot.() -> Unit) = runBlocking { SearchRvRobot.block() }

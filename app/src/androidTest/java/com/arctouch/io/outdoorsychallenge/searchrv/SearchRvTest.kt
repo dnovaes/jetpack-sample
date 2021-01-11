@@ -4,8 +4,8 @@ import android.content.Intent
 import androidx.test.rule.ActivityTestRule
 import com.arctouch.io.outdoorsychallenge.data.source.remote.outdoorsy.network.OutdoorsyApi
 import com.arctouch.io.outdoorsychallenge.dispatchers.InstrumentedTestDispatcherMap
-import com.arctouch.io.outdoorsychallenge.features.main.OutdoorsyActivity
-import com.arctouch.io.outdoorsychallenge.features.searchrv.SearchRvViewModel.Companion.RV_LIST_PAGE_LIMIT
+import com.arctouch.io.outdoorsychallenge.features.outdoorsy.OutdoorsyActivity
+import com.arctouch.io.outdoorsychallenge.features.main.MainViewModel.Companion.RV_LIST_PAGE_LIMIT
 import com.arctouch.io.outdoorsychallenge.instrumentedmocks.mockVehiclesResponse
 import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.whenever

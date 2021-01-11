@@ -1,14 +1,15 @@
-package com.arctouch.io.outdoorsychallenge.features.searchrv.adapters
+package com.arctouch.io.outdoorsychallenge.features.searchrv
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.lifecycle.LifecycleOwner
 import androidx.paging.PagedListAdapter
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.arctouch.io.outdoorsychallenge.databinding.ItemRvBinding
 import com.arctouch.io.outdoorsychallenge.domain.model.Vehicle
 import com.arctouch.io.outdoorsychallenge.extensions.get
+import com.arctouch.io.outdoorsychallenge.features.vehicleadapter.VehicleDiffCallback
+import com.arctouch.io.outdoorsychallenge.features.vehicleadapter.VehicleViewModel
 import org.koin.core.parameter.parametersOf
 
 class SearchRvVehicleAdapter(private val lifecycleOwner: LifecycleOwner) :
@@ -28,14 +29,14 @@ class SearchRvVehicleAdapter(private val lifecycleOwner: LifecycleOwner) :
     class ViewHolder(private val binding: ItemRvBinding, lifecycleOwner: LifecycleOwner) :
         RecyclerView.ViewHolder(binding.root) {
 
-        private var viewModel: SearchRvVehicleViewModel? = null
+        private var viewModel: VehicleViewModel? = null
 
         init {
             binding.lifecycleOwner = lifecycleOwner
         }
 
         fun bind(item: Vehicle) {
-            viewModel = get<SearchRvVehicleViewModel> { parametersOf(item) }
+            viewModel = get<VehicleViewModel> { parametersOf(item) }
                 .apply { binding.viewModel = this }
 
             binding.executePendingBindings()
@@ -45,10 +46,4 @@ class SearchRvVehicleAdapter(private val lifecycleOwner: LifecycleOwner) :
             viewModel = null
         }
     }
-}
-
-private object VehicleDiffCallback : DiffUtil.ItemCallback<Vehicle>() {
-    override fun areItemsTheSame(oldItem: Vehicle, newItem: Vehicle) = oldItem.id == newItem.id
-
-    override fun areContentsTheSame(oldItem: Vehicle, newItem: Vehicle) = oldItem == newItem
 }

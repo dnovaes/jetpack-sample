@@ -4,7 +4,7 @@ import com.arctouch.io.outdoorsychallenge.data.source.remote.outdoorsy.datasourc
 import com.arctouch.io.outdoorsychallenge.data.source.remote.outdoorsy.datasource.VehicleRemoteDataSource
 import com.arctouch.io.outdoorsychallenge.data.source.remote.outdoorsy.network.OutdoorsyApi
 import com.arctouch.io.outdoorsychallenge.domain.model.factory.VehicleFactory
-import com.arctouch.io.outdoorsychallenge.features.searchrv.SearchRvViewModel.Companion.RV_LIST_PAGE_LIMIT
+import com.arctouch.io.outdoorsychallenge.features.main.MainViewModel.Companion.RV_LIST_PAGE_LIMIT
 import com.arctouch.io.outdoorsychallenge.unitmocks.mockVehicles
 import com.arctouch.io.outdoorsychallenge.unitmocks.mockVehiclesResponse
 import com.nhaarman.mockitokotlin2.any

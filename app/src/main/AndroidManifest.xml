@@ -17,7 +17,9 @@
         android:roundIcon="@drawable/icon_car"
         android:supportsRtl="true"
         android:theme="@style/OutdoorsyTheme">
-        <activity android:name=".features.main.OutdoorsyActivity">
+        <activity
+            android:name=".features.outdoorsy.OutdoorsyActivity"
+            android:windowSoftInputMode="adjustNothing">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.intent.action.VIEW" />
