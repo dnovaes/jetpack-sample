@@ -12,7 +12,6 @@ import com.arctouch.io.outdoorsychallenge.R
 import com.arctouch.io.outdoorsychallenge.connectivity.ErrorHandlingFragment
 import com.arctouch.io.outdoorsychallenge.databinding.FragmentSearchRvBinding
 import com.arctouch.io.outdoorsychallenge.features.main.MainViewModel
-import com.arctouch.io.outdoorsychallenge.features.outdoorsy.OutdoorsyViewModel
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -21,8 +20,7 @@ class SearchRvFragment : ErrorHandlingFragment() {
     override lateinit var binding: FragmentSearchRvBinding
     override val viewModel: SearchRvViewModel by viewModel()
     override val navController by lazy { findNavController() }
-    private val outdoorsyViewModel: OutdoorsyViewModel by sharedViewModel()
-    private val mainViewModel: MainViewModel by sharedViewModel()
+    private val sharedViewModel: MainViewModel by sharedViewModel()
 
     private lateinit var vehicleAdapter: SearchRvVehicleAdapter
 
@@ -54,7 +52,7 @@ class SearchRvFragment : ErrorHandlingFragment() {
     }
 
     private fun observeEvents() {
-        mainViewModel.searchButtonClickEvent.observe(viewLifecycleOwner) {
+        sharedViewModel.searchButtonClickEvent.observe(viewLifecycleOwner) {
             viewModel.onSearchRvButtonClicked(it)
         }
 

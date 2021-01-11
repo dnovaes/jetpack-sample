@@ -4,7 +4,7 @@ import com.arctouch.io.outdoorsychallenge.BuildConfig
 import com.arctouch.io.outdoorsychallenge.data.source.remote.BaseClientBuilder
 import com.squareup.moshi.Moshi
 
-class OutdoorsyClientBuilder : BaseClientBuilder<OutdoorsyApi>() {
+object OutdoorsyClientBuilder : BaseClientBuilder<OutdoorsyApi>() {
 
     override val baseUrl: String get() = BuildConfig.OUTDOORSY_URL
 

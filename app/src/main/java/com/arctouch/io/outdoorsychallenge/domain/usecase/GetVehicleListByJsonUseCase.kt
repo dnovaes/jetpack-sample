@@ -17,11 +17,11 @@ interface GetVehicleListByJsonUseCase {
 }
 
 class GetVehicleListByJson constructor(
-    private val vehicleCache: VehicleCache
+    private val vehicleCache: VehicleCache,
+    private val moshi: Moshi
 ) : GetVehicleListByJsonUseCase {
 
     override fun invoke(vehicleJson: String) {
-        val moshi = Moshi.Builder().build()
         val type: Type = Types.newParameterizedType(
             MutableList::class.java,
             Vehicle::class.java

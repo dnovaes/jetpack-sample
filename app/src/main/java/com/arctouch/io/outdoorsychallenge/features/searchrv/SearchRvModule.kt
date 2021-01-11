@@ -7,8 +7,7 @@ val searchRvModule = module {
     viewModel {
         SearchRvViewModel(
             repository = get(),
-            dispatcherMap = get(),
-            vehicleJsonValueUseCase = get()
+            dispatcherMap = get()
         )
     }
 }

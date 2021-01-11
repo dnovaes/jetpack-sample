@@ -28,15 +28,26 @@ val repositoryModule = module {
     single<IVehicleRepository> {
         VehicleRepository(
             remoteDataSource = get(),
-            localDataSource = get()
+            localDataSource = get(),
+            cache = get()
         )
     }
 }
 
 val useCaseModule = module {
-    single<GetVehicleListJsonValueUseCase> { GetVehicleListJsonValue(vehicleCache = get()) }
+    single<GetVehicleListJsonValueUseCase> {
+        GetVehicleListJsonValue(
+            vehicleCache = get(),
+            moshi = get()
+        )
+    }
 
-    single<GetVehicleListByJsonUseCase> { GetVehicleListByJson(vehicleCache = get()) }
+    single<GetVehicleListByJsonUseCase> {
+        GetVehicleListByJson(
+            vehicleCache = get(),
+            moshi = get()
+        )
+    }
 }
 
 val domainModule = listOf(

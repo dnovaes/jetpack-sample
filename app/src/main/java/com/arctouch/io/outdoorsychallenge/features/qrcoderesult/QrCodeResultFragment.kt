@@ -10,7 +10,6 @@ import androidx.navigation.fragment.findNavController
 import com.arctouch.io.outdoorsychallenge.connectivity.ErrorHandlingFragment
 import com.arctouch.io.outdoorsychallenge.databinding.FragmentQrCodeResultBinding
 import com.arctouch.io.outdoorsychallenge.features.main.MainViewModel
-import com.arctouch.io.outdoorsychallenge.features.outdoorsy.OutdoorsyViewModel
 import com.arctouch.io.outdoorsychallenge.features.vehicleadapter.VehicleAdapter
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -20,8 +19,7 @@ class QrCodeResultFragment : ErrorHandlingFragment() {
     override lateinit var binding: FragmentQrCodeResultBinding
     override val viewModel: QrCodeResultViewModel by viewModel()
     override val navController by lazy { findNavController() }
-    private val outdoorsyViewModel: OutdoorsyViewModel by sharedViewModel()
-    private val mainViewModel: MainViewModel by sharedViewModel()
+    private val sharedViewModel: MainViewModel by sharedViewModel()
 
     private lateinit var vehicleAdapter: VehicleAdapter
 
@@ -46,8 +44,12 @@ class QrCodeResultFragment : ErrorHandlingFragment() {
         qrCodeResultsRv.adapter = vehicleAdapter
     }
 
-    private fun observeEvents() = with(viewModel) {
-        vehicles.observe(viewLifecycleOwner) { vehicleAdapter.submitList(it) }
+    private fun observeEvents() {
+        viewModel.vehicles.observe(viewLifecycleOwner) { vehicleAdapter.submitList(it) }
+
+        sharedViewModel.qrCodeListReceivedEvent.observe(viewLifecycleOwner) {
+            viewModel.onQrCodeListReceived()
+        }
     }
 
     companion object {

@@ -13,7 +13,9 @@ import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
 
 val networkModule = module {
-    single { OutdoorsyClientBuilder().buildApiClient() }
+    single { OutdoorsyClientBuilder.buildApiClient() }
+
+    factory { OutdoorsyClientBuilder.buildMoshiAdapter() }
 }
 
 val databaseModule = module {

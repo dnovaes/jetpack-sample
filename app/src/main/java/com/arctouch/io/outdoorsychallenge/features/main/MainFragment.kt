@@ -62,6 +62,7 @@ class MainFragment : ErrorHandlingFragment() {
 
         mainTiet.setOnEditorActionListener { _, _, _ ->
             hideKeyboard(root)
+            mainVp.currentItem = SEARCH_RESULT_TAB_POSITION
             this@MainFragment.viewModel.onSearchRvButtonClicked()
             true
         }
@@ -80,12 +81,8 @@ class MainFragment : ErrorHandlingFragment() {
 
     private fun observeEvents() {
         sharedViewModel.qrCodeEvent.observe(viewLifecycleOwner) {
-            binding.mainTiet.setText(QR_CODE_RESULT)
+            binding.mainVp.currentItem = QR_CODE_RESULT_TAB_POSITION
             viewModel.onQrCodeListReceived()
-        }
-
-        viewModel.qrCodeListReceivedEvent.observe(viewLifecycleOwner) {
-            binding.mainVp.currentItem = 2
         }
     }
 
@@ -140,7 +137,9 @@ class MainFragment : ErrorHandlingFragment() {
 
     companion object {
 
+        private const val SEARCH_RESULT_TAB_POSITION = 0
+        private const val QR_CODE_RESULT_TAB_POSITION = 2
+
         private const val VOICE_RECOGNITION_REQUEST_CODE = 1234
-        const val QR_CODE_RESULT = "QrCode Result"
     }
 }
