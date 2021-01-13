@@ -3,7 +3,7 @@
     <string name="app_name">Outdoorsy Challenge</string>
 
     <!-- Main -->
-    <string name="main_qr_code_error_message">It was not possible to generate an QrCode</string>
+    <string name="main_qr_code_error_message">It was not possible to generate a QrCode</string>
     <string name="main_toolbar_hint_text">Search</string>
     <string name="main_voice_search_progress_text">Voice searching…</string>
     <string name="main_tab_all">All</string>
