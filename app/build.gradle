@@ -1,6 +1,5 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'androidx.navigation.safeargs.kotlin'
 
@@ -91,6 +90,9 @@ dependencies {
     implementation deps.retrofit.runtime
     implementation deps.retrofit.moshi_converter
     implementation deps.retrofit.coroutine_adapter
+
+    // Moshi
+    implementation deps.moshi.kotlin
 
     // Zxing
     implementation deps.zxing

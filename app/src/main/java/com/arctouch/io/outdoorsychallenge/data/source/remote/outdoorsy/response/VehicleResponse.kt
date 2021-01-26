@@ -1,5 +1,9 @@
 package com.arctouch.io.outdoorsychallenge.data.source.remote.outdoorsy.response
 
+import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
+
+@JsonClass(generateAdapter = true)
 data class VehicleDataResponse(
     val id: String,
     val attributes: Attributes?,
@@ -7,7 +11,7 @@ data class VehicleDataResponse(
 ) {
 
     data class Attributes(val name: String?)
-    data class Relationships(val primary_image: PrimaryImage?) {
+    data class Relationships(@Json(name = "primary_image") val primaryImage: PrimaryImage?) {
 
         data class PrimaryImage(val data: Data?) {
 

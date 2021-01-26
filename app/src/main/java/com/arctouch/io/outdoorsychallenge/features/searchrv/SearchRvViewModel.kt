@@ -85,7 +85,9 @@ class SearchRvViewModel(
             performRequestSafely(onError = { onPageError() }) {
                 _paginationProgressIsVisible.postValue(true)
 
-                callback.onResult(load(query, RV_LIST_PAGE_LIMIT * params.key), params.key + 1)
+                load(query, RV_LIST_PAGE_LIMIT * params.key).let {
+                    callback.onResult(it, params.key + 1)
+                }
 
                 _paginationProgressIsVisible.postValue(false)
             }

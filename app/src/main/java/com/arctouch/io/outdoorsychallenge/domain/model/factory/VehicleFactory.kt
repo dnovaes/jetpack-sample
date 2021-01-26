@@ -13,7 +13,7 @@ class VehicleFactory : VehicleFactoryAlias {
             Vehicle(
                 id = first.id,
                 name = first.attributes?.name?.ifBlank { null }?.trim(),
-                imageUrl = getImageUrlBy(first.relationships?.primary_image?.data?.id, second)
+                imageUrl = getImageUrlBy(first.relationships?.primaryImage?.data?.id, second)
             )
         }
 

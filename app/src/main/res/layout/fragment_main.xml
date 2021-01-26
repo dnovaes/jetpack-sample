@@ -34,7 +34,7 @@
                     style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginVertical="@dimen/margin_search_rv"
+                    android:layout_marginVertical="@dimen/margin_horizontal_item_rv"
                     android:hint="@string/main_toolbar_hint_text"
                     app:boxBackgroundColor="@color/white"
                     app:endIconDrawable="@drawable/icon_voice_search"
